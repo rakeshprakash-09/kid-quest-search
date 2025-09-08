@@ -19,7 +19,7 @@ export const Mascot: React.FC<MascotProps> = ({ message = "Hi there! I'm Quest!"
     <div className="flex items-center gap-4">
       <div className="relative">
         <div className="w-20 h-20 bg-gradient-ocean rounded-full flex items-center justify-center text-4xl animate-float shadow-glow">
-          🦉
+          🦒
         </div>
         <div className="absolute -top-2 -right-2 text-2xl animate-bounce-gentle">
           {getEmoji()}

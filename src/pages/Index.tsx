@@ -23,7 +23,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [dailyTopic, setDailyTopic] = useState(spotlightTopics[0]);
-  const [mascotMessage, setMascotMessage] = useState("Hi! I'm Quest the Owl! Ask me anything you want to learn about! 🦉");
+  const [mascotMessage, setMascotMessage] = useState("Hi! I'm Quest the Giraffe! Ask me anything you want to learn about! 🦒");
   const [mascotEmotion, setMascotEmotion] = useState<'happy' | 'excited' | 'thinking' | 'waving'>('waving');
 
   useEffect(() => {
