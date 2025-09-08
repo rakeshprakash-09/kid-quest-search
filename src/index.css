@@ -166,6 +166,16 @@ All colors MUST be HSL.
     }
   }
   
+  @keyframes blink {
+    0%, 90%, 100% { opacity: 1; }
+    95% { opacity: 0; }
+  }
+  
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
   .animate-bounce-gentle {
     animation: bounce-gentle 2s ease-in-out infinite;
   }
@@ -180,5 +190,13 @@ All colors MUST be HSL.
   
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  .animate-blink {
+    animation: blink 3s infinite;
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 2s linear;
   }
 }
