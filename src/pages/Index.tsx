@@ -5,12 +5,9 @@ import { TopicCategories } from '@/components/TopicCategories';
 import { SearchResult } from '@/components/SearchResult';
 import { DailySpotlight } from '@/components/DailySpotlight';
 import { LoadingAnimation } from '@/components/LoadingAnimation';
-import { ApiKeyModal } from '@/components/ApiKeyModal';
-import { getKidFriendlyAnswer, getApiKey } from '@/lib/openai';
+import { getKidFriendlyAnswer } from '@/lib/openai';
 import { speakText } from '@/lib/textToSpeech';
 import { toast } from 'sonner';
-import { Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 
 // Daily spotlight topics that rotate
 const spotlightTopics = [
@@ -28,17 +25,11 @@ const Index = () => {
   const [dailyTopic, setDailyTopic] = useState(spotlightTopics[0]);
   const [mascotMessage, setMascotMessage] = useState("Hi! I'm Quest the Owl! Ask me anything you want to learn about! 🦉");
   const [mascotEmotion, setMascotEmotion] = useState<'happy' | 'excited' | 'thinking' | 'waving'>('waving');
-  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
 
   useEffect(() => {
     // Rotate daily topic based on day
     const dayIndex = new Date().getDay() % spotlightTopics.length;
     setDailyTopic(spotlightTopics[dayIndex]);
-    
-    // Check if API key exists on mount
-    if (!getApiKey()) {
-      setShowApiKeyModal(true);
-    }
   }, []);
 
   const handleSearch = async (query: string) => {
@@ -95,18 +86,6 @@ const Index = () => {
 
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-4 py-6 max-w-7xl">
-        {/* Settings Button */}
-        <div className="absolute top-4 right-4">
-          <Button
-            onClick={() => setShowApiKeyModal(true)}
-            variant="ghost"
-            size="icon"
-            className="rounded-full hover:bg-pastel-purple/20"
-          >
-            <Settings className="h-5 w-5 text-fun-purple" />
-          </Button>
-        </div>
-        
         {/* Header */}
         <header className="text-center mb-8">
           <h1 className="text-5xl md:text-6xl font-bold bg-gradient-rainbow bg-clip-text text-transparent mb-2 animate-bounce-gentle">
@@ -182,15 +161,6 @@ const Index = () => {
           </div>
         )}
       </div>
-      
-      {/* API Key Modal */}
-      <ApiKeyModal
-        isOpen={showApiKeyModal}
-        onClose={() => setShowApiKeyModal(false)}
-        onSave={() => {
-          toast.success("API key saved! Now you can search for anything!");
-        }}
-      />
     </div>
   );
 };
