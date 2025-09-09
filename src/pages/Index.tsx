@@ -84,17 +84,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Forest Theme Background */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
         {/* Sky gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-blue-200 via-blue-100 to-green-50"></div>
         
         {/* Clouds */}
         <div className="absolute top-10 left-20 text-8xl opacity-40 animate-float">☁️</div>
         <div className="absolute top-20 right-32 text-6xl opacity-30 animate-float" style={{ animationDelay: '3s' }}>☁️</div>
-        <div className="absolute top-5 right-1/3 text-7xl opacity-35 animate-float" style={{ animationDelay: '1.5s' }}>☁️</div>
+        <div className="absolute top-5 right-1/3 text-7xl opacity-40 animate-float" style={{ animationDelay: '1.5s' }}>☁️</div>
         
         {/* Sun */}
-        <div className="absolute top-10 right-20 text-8xl animate-spin-slow">☀️</div>
+        <div className="absolute top-10 right-20 text-8xl animate-[spin_12s_linear_infinite]">☀️</div>
         
         {/* Trees */}
         <div className="absolute bottom-0 left-0 text-[200px] opacity-80">🌲</div>
