@@ -5,31 +5,37 @@ import { TopicCategories } from '@/components/TopicCategories';
 import { SearchResult } from '@/components/SearchResult';
 import { DailySpotlight } from '@/components/DailySpotlight';
 import { LoadingAnimation } from '@/components/LoadingAnimation';
-import { getKidFriendlyAnswer } from '@/lib/openai';
+import { getKidFriendlyAnswer, getDailyTopic, DailyTopic } from '@/lib/openai';
 import { speakText } from '@/lib/textToSpeech';
 import { toast } from 'sonner';
 
-// Daily spotlight topics that rotate
-const spotlightTopics = [
-  { topic: "Giant Pandas", description: "Did you know pandas spend 14 hours a day eating bamboo?", emoji: "🐼" },
-  { topic: "The Solar System", description: "Jupiter is so big that all other planets could fit inside it!", emoji: "🪐" },
-  { topic: "Rainforests", description: "The Amazon rainforest produces 20% of the world's oxygen!", emoji: "🌳" },
-  { topic: "Ancient Egypt", description: "The pyramids were built over 4,500 years ago!", emoji: "🔺" },
-  { topic: "Ocean Life", description: "The ocean is home to the largest animal ever - the blue whale!", emoji: "🐋" },
-];
+
 
 const Index = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
-  const [dailyTopic, setDailyTopic] = useState(spotlightTopics[0]);
+  const [dailyTopic, setDailyTopic] = useState<DailyTopic>({
+    topic: "Loading...",
+    description: "Getting today's exciting topic!",
+    emoji: "⏳"
+  });
   const [mascotMessage, setMascotMessage] = useState("Hi! I'm Quest the Owl! Ask me anything you want to learn about! 🦉");
   const [mascotEmotion, setMascotEmotion] = useState<'happy' | 'excited' | 'thinking' | 'waving'>('waving');
 
   useEffect(() => {
-    // Rotate daily topic based on day
-    const dayIndex = new Date().getDay() % spotlightTopics.length;
-    setDailyTopic(spotlightTopics[dayIndex]);
+    // Fetch daily topic from OpenAI
+    const fetchDailyTopic = async () => {
+      try {
+        const topic = await getDailyTopic();
+        setDailyTopic(topic);
+      } catch (error) {
+        console.error('Error fetching daily topic:', error);
+        // Keep the loading state as fallback
+      }
+    };
+
+    fetchDailyTopic();
   }, []);
 
   const handleSearch = async (query: string) => {
