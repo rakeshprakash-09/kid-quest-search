@@ -83,11 +83,50 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
-      {/* Animated background */}
-      <div className="fixed inset-0 -z-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-pastel-pink rounded-full opacity-20 blur-3xl animate-float"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-pastel-blue rounded-full opacity-20 blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pastel-yellow rounded-full opacity-10 blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+      {/* Forest Theme Background */}
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        {/* Sky gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-200 via-blue-100 to-green-50"></div>
+        
+        {/* Clouds */}
+        <div className="absolute top-10 left-20 text-8xl opacity-40 animate-float">☁️</div>
+        <div className="absolute top-20 right-32 text-6xl opacity-30 animate-float" style={{ animationDelay: '3s' }}>☁️</div>
+        <div className="absolute top-5 right-1/3 text-7xl opacity-35 animate-float" style={{ animationDelay: '1.5s' }}>☁️</div>
+        
+        {/* Sun */}
+        <div className="absolute top-10 right-20 text-8xl animate-spin-slow">☀️</div>
+        
+        {/* Trees */}
+        <div className="absolute bottom-0 left-0 text-[200px] opacity-80">🌲</div>
+        <div className="absolute bottom-0 left-32 text-[180px] opacity-70">🌳</div>
+        <div className="absolute bottom-0 right-0 text-[200px] opacity-80">🌲</div>
+        <div className="absolute bottom-0 right-40 text-[160px] opacity-75">🌳</div>
+        <div className="absolute bottom-0 left-1/3 text-[190px] opacity-85">🌲</div>
+        <div className="absolute bottom-0 right-1/3 text-[170px] opacity-70">🌳</div>
+        
+        {/* Animated Forest Animals */}
+        <div className="absolute bottom-20 left-10 text-6xl animate-bounce-gentle" style={{ animationDelay: '0.5s' }}>🐰</div>
+        <div className="absolute bottom-32 right-20 text-5xl animate-wiggle">🦝</div>
+        <div className="absolute bottom-16 left-1/4 text-5xl animate-bounce-gentle" style={{ animationDelay: '2s' }}>🦊</div>
+        <div className="absolute bottom-40 right-1/3 text-4xl animate-float" style={{ animationDelay: '1s' }}>🦋</div>
+        <div className="absolute bottom-24 right-1/4 text-6xl animate-bounce-gentle" style={{ animationDelay: '3s' }}>🐻</div>
+        <div className="absolute bottom-10 left-1/2 text-4xl animate-wiggle" style={{ animationDelay: '1.5s' }}>🐸</div>
+        
+        {/* Birds flying */}
+        <div className="absolute top-32 left-1/4 text-4xl animate-float">🦜</div>
+        <div className="absolute top-40 right-1/2 text-3xl animate-float" style={{ animationDelay: '2s' }}>🐦</div>
+        <div className="absolute top-28 right-1/4 text-4xl animate-float" style={{ animationDelay: '4s' }}>🦅</div>
+        
+        {/* Flowers and decorations */}
+        <div className="absolute bottom-5 left-16 text-3xl">🌻</div>
+        <div className="absolute bottom-8 right-32 text-3xl">🌺</div>
+        <div className="absolute bottom-3 left-1/3 text-2xl">🌼</div>
+        <div className="absolute bottom-6 right-1/2 text-3xl">🌷</div>
+        <div className="absolute bottom-4 left-2/3 text-2xl">🌸</div>
+        
+        {/* Mushrooms */}
+        <div className="absolute bottom-12 left-40 text-3xl">🍄</div>
+        <div className="absolute bottom-8 right-2/3 text-2xl">🍄</div>
       </div>
 
       {/* Main Content */}
