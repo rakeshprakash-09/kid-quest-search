@@ -1,7 +1,7 @@
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
-const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
+const openRouterApiKey = Deno.env.get('OPENROUTER_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -17,8 +17,8 @@ serve(async (req) => {
   try {
     console.log('Received request for kid-friendly answer');
     
-    if (!openAIApiKey) {
-      throw new Error('OpenAI API key is not configured');
+    if (!openRouterApiKey) {
+      throw new Error('OpenRouter API key is not configured');
     }
 
     const { query } = await req.json();
@@ -29,14 +29,14 @@ serve(async (req) => {
 
     console.log('Processing query:', query);
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        'Authorization': `Bearer ${openRouterApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'meta-llama/llama-3.3-70b-instruct:free',
         messages: [
           {
             role: 'system',
@@ -66,14 +66,14 @@ serve(async (req) => {
 
     if (!response.ok) {
       const error = await response.text();
-      console.error('OpenAI API error:', error);
-      throw new Error('Failed to get response from OpenAI');
+      console.error('OpenRouter API error:', error);
+      throw new Error('Failed to get response from OpenRouter');
     }
 
     const data = await response.json();
     const content = data.choices[0].message.content;
-    
-    console.log('OpenAI response received');
+
+    console.log('OpenRouter response received');
     
     try {
       const parsed = JSON.parse(content);
@@ -85,7 +85,7 @@ serve(async (req) => {
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } catch (parseError) {
-      console.error('Error parsing OpenAI response:', parseError);
+      console.error('Error parsing OpenRouter response:', parseError);
       // If JSON parsing fails, return the content as answer
       return new Response(
         JSON.stringify({

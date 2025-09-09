@@ -206,6 +206,22 @@ const Index = () => {
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="relative z-10 mt-12 pb-6">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="flex justify-end">
+            <button
+              onClick={() => window.location.href = 'mailto:thoughtloom2025@gmail.com?subject=Feedback%20for%20KidQuest&body=Hi%20there,%0A%0AI%20have%20some%20feedback%20or%20suggestions%20for%20KidQuest:%0A%0A'}
+              className="inline-flex items-center gap-2 px-4 py-2 text-black hover:text-primary transition-colors duration-300 group text-sm"
+              title="Send Feedback"
+            >
+              <span className="text-lg group-hover:animate-bounce">💌</span>
+              <span className="font-medium">Feedback/Suggestions</span>
+            </button>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
