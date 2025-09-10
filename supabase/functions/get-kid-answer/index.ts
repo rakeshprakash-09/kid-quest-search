@@ -73,24 +73,67 @@ serve(async (req) => {
     const data = await response.json();
     const content = data.choices[0].message.content;
 
-    console.log('OpenRouter response received');
+    console.log('OpenRouter response received:', content);
     
     try {
-      const parsed = JSON.parse(content);
+      // Try to extract JSON from the content
+      // Sometimes the model returns JSON wrapped in markdown code blocks
+      let jsonContent = content;
+      
+      // Remove markdown code blocks if present
+      jsonContent = jsonContent.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+      
+      // Try to find JSON object in the content
+      const jsonMatch = jsonContent.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        jsonContent = jsonMatch[0];
+      }
+      
+      const parsed = JSON.parse(jsonContent);
+      
+      // Ensure funFacts is an array
+      let funFacts = parsed.funFacts || [];
+      if (typeof funFacts === 'string') {
+        funFacts = [funFacts];
+      }
+      
       return new Response(
         JSON.stringify({
           answer: parsed.answer || "Let me help you learn about that!",
-          funFacts: parsed.funFacts || []
+          funFacts: Array.isArray(funFacts) ? funFacts : []
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     } catch (parseError) {
       console.error('Error parsing OpenRouter response:', parseError);
-      // If JSON parsing fails, return the content as answer
+      console.log('Raw content:', content);
+      
+      // Fallback: Try to extract answer and fun facts from plain text
+      // Look for patterns like "funFacts": [...] in the text
+      const funFactsMatch = content.match(/"funFacts":\s*\[(.*?)\]/s);
+      let funFacts = [];
+      
+      if (funFactsMatch) {
+        try {
+          // Extract and parse the fun facts array
+          funFacts = JSON.parse(`[${funFactsMatch[1]}]`);
+        } catch (e) {
+          console.error('Could not parse fun facts:', e);
+        }
+      }
+      
+      // Clean up the answer by removing the funFacts JSON if it's embedded
+      let cleanAnswer = content;
+      if (funFactsMatch) {
+        cleanAnswer = content.replace(/"funFacts":\s*\[.*?\]/s, '').trim();
+        // Also remove any trailing JSON syntax
+        cleanAnswer = cleanAnswer.replace(/[,\}\{]*$/, '').trim();
+      }
+      
       return new Response(
         JSON.stringify({
-          answer: content,
-          funFacts: []
+          answer: cleanAnswer || content,
+          funFacts: funFacts
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
