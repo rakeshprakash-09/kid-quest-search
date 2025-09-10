@@ -28,7 +28,7 @@ serve(async (req) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
+        model: 'gpt-3.5-turbo',
         messages: [
           {
             role: 'system',
@@ -53,7 +53,7 @@ serve(async (req) => {
             content: 'Generate a fun daily learning topic for kids.'
           }
         ],
-        temperature: 0.9,
+        temperature: 0.8,
         max_tokens: 150
       })
     });
